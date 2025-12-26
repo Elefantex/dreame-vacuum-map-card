@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Header } from './Header';
-import { CleaningModeButton } from './CleaningModeButton';
-import { VacuumMap } from './VacuumMap';
-import { ModeTabs } from './ModeTabs';
-import { ActionButtons } from './ActionButtons';
-import { CleaningModeModal } from './CleaningModeModal';
-import type { Hass, HassConfig, CleaningMode, CleaningStrategy, RoomPosition } from '../types/homeassistant';
+import { Header } from '../Header';
+import { CleaningModeButton } from '../CleaningModeButton';
+import { VacuumMap } from '../VacuumMap';
+import { ModeTabs } from '../ModeTabs';
+import { ActionButtons } from '../ActionButtons';
+import { CleaningModeModal } from '../CleaningModeModal';
+import type { Hass, HassConfig, CleaningMode, CleaningStrategy, RoomPosition } from '../../types/homeassistant';
+import './DreameVacuumCard.scss';
 
 interface DreameVacuumCardProps {
   hass: Hass;
@@ -108,20 +109,12 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
   };
 
   if (!entity) {
-    return <div>Entity not found: {config.entity}</div>;
+    return <div className="dreame-vacuum-card__error">Entity not found: {config.entity}</div>;
   }
 
   return (
-    <div
-      style={{
-        background: '#f5f5f7',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div className="dreame-vacuum-card">
+      <div className="dreame-vacuum-card__container">
         <Header entity={entity} deviceName={deviceName} />
         <VacuumMap
           hass={hass}
@@ -134,19 +127,9 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
 
         <CleaningModeButton cleaningMode={cleaningMode} onClick={() => setModalOpened(true)} />
 
-        <div style={{ padding: '0 20px 20px' }}>
+        <div className="dreame-vacuum-card__controls">
           {selectedRooms.size > 0 && (
-            <div
-              style={{
-                margin: '10px 0',
-                padding: '8px 12px',
-                background: 'rgba(0,122,255, 0.1)',
-                borderRadius: '8px',
-                textAlign: 'center',
-                fontSize: '14px',
-                color: '#007aff',
-              }}
-            >
+            <div className="dreame-vacuum-card__room-selection">
               Selected rooms: {Array.from(selectedRooms.values()).join(', ')}
             </div>
           )}
@@ -168,34 +151,9 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
       />
 
       {toast && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            zIndex: 1000,
-            background: 'white',
-            padding: '12px 16px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '12px',
-          }}
-        >
-          <span>{toast}</span>
-          <button
-            onClick={() => setToast(null)}
-            style={{
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
-              fontSize: '18px',
-              padding: '0',
-              color: '#666',
-            }}
-          >
+        <div className="dreame-vacuum-card__toast">
+          <span className="dreame-vacuum-card__toast-message">{toast}</span>
+          <button className="dreame-vacuum-card__toast-close" onClick={() => setToast(null)}>
             ×
           </button>
         </div>

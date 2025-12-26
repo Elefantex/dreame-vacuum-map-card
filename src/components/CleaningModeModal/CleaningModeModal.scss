@@ -1,0 +1,358 @@
+.cleaning-mode-modal {
+  &__header {
+    margin-bottom: 24px;
+  }
+
+  &__section {
+    margin-bottom: 24px;
+  }
+
+  &__section-title {
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  &__help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid #999;
+    font-size: 11px;
+    color: #999;
+    font-weight: 600;
+  }
+
+  // Room map visualization (CleanGenius mode)
+  &__room-map {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+  }
+
+  &__placeholder {
+    font-size: 13px;
+    color: #999;
+  }
+
+  // Cleaning Mode Grid (CleanGenius)
+  &__mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &__mode-card {
+    position: relative;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: white;
+    padding: 24px 16px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    &--selected {
+      border: 3px solid #D4AF37;
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+    }
+  }
+
+  &__mode-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+
+    &--vac-mop {
+      background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%);
+    }
+
+    &--mop-after {
+      background: linear-gradient(135deg, #A0E7FF 0%, #5AC8FA 100%);
+    }
+  }
+
+  &__mode-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+  }
+
+  &__mode-checkmark {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    color: white;
+    font-size: 14px;
+  }
+
+  // Horizontal scroll for mode options (Custom)
+  &__horizontal-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 2px;
+
+      &:hover {
+        background: #bbb;
+      }
+    }
+  }
+
+  &__mode-option {
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__mode-option-label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  // Suction Power Grid
+  &__power-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  &__power-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__power-label {
+    font-size: 13px;
+    color: #1a1a1a;
+    text-align: center;
+  }
+
+  // Max+ Setting
+  &__max-plus {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  &__max-plus-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__max-plus-title {
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+
+  &__max-plus-description {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  // Wetness Slider
+  &__slider-container {
+    position: relative;
+    padding: 0 8px;
+    margin-bottom: 12px;
+  }
+
+  &__slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    background: linear-gradient(to right, #D4AF37 0%, #D4AF37 66%, #e0e0e0 66%, #e0e0e0 100%);
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #D4AF37;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #D4AF37;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__slider-value {
+    position: absolute;
+    top: -32px;
+    left: 66%;
+    transform: translateX(-50%);
+    background: #D4AF37;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+    pointer-events: none;
+  }
+
+  &__slider-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    margin-top: 24px;
+  }
+
+  &__slider-label {
+    font-size: 13px;
+
+    &--inactive {
+      color: #999;
+    }
+
+    &--active {
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+  }
+
+  // Generic Setting Row
+  &__setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 16px;
+
+    &--clickable {
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: #f8f8f8;
+      }
+
+      &:active {
+        background: #f0f0f0;
+      }
+    }
+  }
+
+  &__setting-label {
+    font-size: 15px;
+    color: #1a1a1a;
+  }
+
+  &__setting-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #999;
+  }
+
+  &__setting-arrow {
+    font-size: 18px;
+    color: #999;
+  }
+
+  // Route Grid
+  &__route-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  &__route-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__route-label {
+    font-size: 13px;
+    color: #1a1a1a;
+    text-align: center;
+  }
+}

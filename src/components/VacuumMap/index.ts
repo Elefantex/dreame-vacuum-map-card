@@ -1,0 +1,1 @@
+export { VacuumMap } from './VacuumMap';

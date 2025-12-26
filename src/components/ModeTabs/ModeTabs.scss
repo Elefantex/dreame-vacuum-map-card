@@ -1,0 +1,31 @@
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+  background: #e8e8e8;
+  border-radius: 15px;
+  padding: 4px;
+  margin-bottom: 15px;
+
+  &__button {
+    flex: 1;
+    border: none;
+    border-radius: 11px;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+    color: #666;
+
+    &--active {
+      background-color: white;
+      color: #000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover:not(&--active) {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}

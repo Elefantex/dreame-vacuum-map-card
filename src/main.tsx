@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { DreameVacuumCard } from './components/DreameVacuumCard';
 import type { Hass, HassConfig } from './types/homeassistant';
+import styles from './styles.scss?inline';
 
 class DreameVacuumMapCard extends HTMLElement {
   private _root: ReactDOM.Root | null = null;
@@ -11,6 +12,11 @@ class DreameVacuumMapCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    
+    // Inject styles into shadow DOM
+    const styleEl = document.createElement('style');
+    styleEl.textContent = styles;
+    this.shadowRoot!.appendChild(styleEl);
   }
 
   setConfig(config: HassConfig) {
