@@ -1,6 +1,6 @@
 /**
  * Utility functions for icon mappings
- * Maps various vacuum states and modes to emoji icons
+ * Maps various vacuum states and modes to SVG or emoji icons
  */
 
 import {
@@ -8,29 +8,35 @@ import {
   SUCTION_LEVEL,
   CLEANING_ROUTE,
   SELF_CLEAN_FREQUENCY,
+  VACUUM_ICON_SVG,
+  MOP_ICON_SVG,
+  VACUUM_MOP_ICON_SVG,
+  MOP_AFTER_VACUUM_ICON_SVG,
 } from '../constants';
 import type { CleaningMode, CleanGeniusMode, SuctionLevel, CleaningRoute, SelfCleanFrequency } from '../types/vacuum';
 
 /**
  * Get icon for cleaning mode
+ * Returns either an SVG string or emoji
  */
 export function getCleaningModeIcon(mode: CleaningMode): string {
-  if (mode.includes('Sweep') && mode.includes('Mop')) return '🔄';
-  if (mode.includes('after')) return '➜';
-  if (mode.includes('Mop')) return '💧';
-  if (mode.includes('Sweep') || mode.includes('Vacuum')) return '🌀';
+  if (mode.includes('Sweep') && mode.includes('Mop')) return VACUUM_MOP_ICON_SVG;
+  if (mode.includes('after')) return MOP_AFTER_VACUUM_ICON_SVG;
+  if (mode.includes('Mop')) return MOP_ICON_SVG;
+  if (mode.includes('Sweep') || mode.includes('Vacuum')) return VACUUM_ICON_SVG;
   return '⚙️';
 }
 
 /**
  * Get icon for CleanGenius mode
+ * Returns either an SVG string or emoji
  */
 export function getCleanGeniusModeIcon(mode: CleanGeniusMode): string {
   switch (mode) {
     case CLEANGENIUS_MODE.VACUUM_AND_MOP:
-      return '🔄';
+      return VACUUM_MOP_ICON_SVG;
     case CLEANGENIUS_MODE.MOP_AFTER_VACUUM:
-      return '➜';
+      return MOP_AFTER_VACUUM_ICON_SVG;
     default:
       return '⚙️';
   }

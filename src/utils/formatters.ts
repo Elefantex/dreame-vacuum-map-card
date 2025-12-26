@@ -15,7 +15,7 @@ export function getCleaningModeFriendlyName(mode: CleaningMode): string {
     case CLEANING_MODE.MOPPING_AFTER_SWEEPING:
       return 'Mop after Vac';
     case CLEANING_MODE.SWEEPING:
-      return 'Vacuum';
+      return 'Vac';
     case CLEANING_MODE.MOPPING:
       return 'Mop';
     default:

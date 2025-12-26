@@ -15,6 +15,9 @@ export function CircularButton({
   onClick,
   size = 'medium' 
 }: CircularButtonProps) {
+  // Check if icon is an SVG string
+  const isSvg = typeof icon === 'string' && icon.trim().startsWith('<svg');
+  
   return (
     <div className="circular-button">
       <button
@@ -24,7 +27,14 @@ export function CircularButton({
         onClick={onClick}
       >
         {typeof icon === 'string' ? (
-          <span className="circular-button__icon">{icon}</span>
+          isSvg ? (
+            <span 
+              className="circular-button__icon circular-button__icon--svg" 
+              dangerouslySetInnerHTML={{ __html: icon }}
+            />
+          ) : (
+            <span className="circular-button__icon">{icon}</span>
+          )
         ) : (
           icon
         )}

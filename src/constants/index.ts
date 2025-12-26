@@ -3,6 +3,9 @@
  * Eliminates magic numbers and strings throughout the codebase
  */
 
+// Re-export icon SVG constants
+export * from './icons';
+
 // Slider configuration
 export const SLIDER_CONFIG = {
   WETNESS: {

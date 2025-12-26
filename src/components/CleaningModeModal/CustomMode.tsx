@@ -10,6 +10,7 @@ import {
   convertCleaningModeToService,
   convertSelfCleanFrequencyToService,
   convertToLowerCase,
+  getCleaningModeFriendlyName,
 } from '../../utils';
 import {
   SLIDER_CONFIG,
@@ -85,7 +86,7 @@ export function CustomMode({
                 onClick={() => setSelectOption(entityIds.cleaningMode, convertCleaningModeToService(mode as CleaningMode))}
                 icon={getCleaningModeIcon(mode as CleaningMode)}
               />
-              <span className="cleaning-mode-modal__mode-option-label">{mode}</span>
+              <span className="cleaning-mode-modal__mode-option-label">{getCleaningModeFriendlyName(mode as CleaningMode)}</span>
             </div>
           ))}
         </div>
