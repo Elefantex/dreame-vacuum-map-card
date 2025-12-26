@@ -1,4 +1,3 @@
-import { Drawer, Button, Group, Stack, Text, Box, Grid, Switch } from '@mantine/core';
 import type { CleaningStrategy } from '../types/homeassistant';
 
 interface CleaningModeModalProps {
@@ -16,26 +15,46 @@ export function CleaningModeModal({
 }: CleaningModeModalProps) {
   const cleaningModes = [
     { id: 'vac-mop', label: 'Vac & Mop', color: '#34C759' },
-    { id: 'vac-then-mop', label: 'Vac then Mop', color: '#007AFF' },
+    { id: 'vac-then-mop', label: 'Vac then Mop', color: '#5AC8FA' },
     { id: 'vacuum', label: 'Vacuum', color: '#FF9500' },
     { id: 'mop', label: 'Mop', color: '#00C7BE' },
   ];
 
+  if (!opened) return null;
+
   return (
-    <Drawer
-      opened={opened}
-      onClose={onClose}
-      withCloseButton={false}
-      position="bottom"
-      size="auto"
-      styles={{
-        content: { borderRadius: '20px 20px 0 0' },
-        body: { padding: 0 },
-      }}
-    >
-      <Stack gap="md" style={{ padding: '0 20px 20px' }}>
+    <>
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.4)',
+          zIndex: 999,
+        }}
+      />
+      
+      {/* Modal */}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: '#f5f5f7',
+          borderRadius: '20px 20px 0 0',
+          padding: '0 20px 20px',
+          zIndex: 1000,
+          maxHeight: '80vh',
+          overflowY: 'auto',
+        }}
+      >
         {/* Handle */}
-        <Box
+        <div
           style={{
             width: '36px',
             height: '5px',
@@ -46,136 +65,54 @@ export function CleaningModeModal({
         />
 
         {/* Mode Toggle */}
-        <Group gap="sm">
-          <Button
-            variant={cleaningMode === 'CleanGenius' ? 'filled' : 'subtle'}
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+          <button
             onClick={() => onModeChange('CleanGenius')}
-            style={{ flex: 1, borderRadius: '12px' }}
-            styles={{
-              root: {
-                backgroundColor: cleaningMode === 'CleanGenius' ? 'white' : 'rgba(0,0,0,0.05)',
-                color: cleaningMode === 'CleanGenius' ? '#1a1a1a' : '#666',
-                boxShadow: cleaningMode === 'CleanGenius' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-              },
+            style={{
+              flex: 1,
+              border: 'none',
+              borderRadius: '12px',
+              padding: '12px',
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              backgroundColor: cleaningMode === 'CleanGenius' ? 'white' : '#e8e8e8',
+              color: cleaningMode === 'CleanGenius' ? '#1a1a1a' : '#666',
+              boxShadow: cleaningMode === 'CleanGenius' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
             }}
           >
             CleanGenius
-          </Button>
-          <Button
-            variant={cleaningMode === 'Custom' ? 'filled' : 'subtle'}
+          </button>
+          <button
             onClick={() => onModeChange('Custom')}
-            style={{ flex: 1, borderRadius: '12px' }}
-            styles={{
-              root: {
-                backgroundColor: cleaningMode === 'Custom' ? 'white' : 'rgba(0,0,0,0.05)',
-                color: cleaningMode === 'Custom' ? '#1a1a1a' : '#666',
-                boxShadow: cleaningMode === 'Custom' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-              },
+            style={{
+              flex: 1,
+              border: 'none',
+              borderRadius: '12px',
+              padding: '12px',
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              backgroundColor: cleaningMode === 'Custom' ? 'white' : '#e8e8e8',
+              color: cleaningMode === 'Custom' ? '#1a1a1a' : '#666',
+              boxShadow: cleaningMode === 'Custom' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
             }}
           >
             Custom
-          </Button>
-        </Group>
+          </button>
+        </div>
 
         {/* Free your hands section */}
-        <Stack gap="xs">
-          <Text size="sm" c="dimmed" fw={500}>
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '13px', color: '#666', fontWeight: 500, margin: '0 0 12px' }}>
             Free your hands
-          </Text>
-          <Grid gutter="sm">
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
             {cleaningModes.map((mode) => (
-              <Grid.Col key={mode.id} span={6}>
-                <Box
-                  style={{
-                    aspectRatio: 1,
-                    border: '2px solid rgba(0,0,0,0.1)',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    background: 'white',
-                    position: 'relative',
-                  }}
-                >
-                  <Box
-                    style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      background: mode.color,
-                      marginBottom: '8px',
-                    }}
-                  />
-                  <Text size="sm" fw={500}>
-                    {mode.label}
-                  </Text>
-                </Box>
-              </Grid.Col>
-            ))}
-          </Grid>
-        </Stack>
-
-        {/* Intelligent Recommended Cleaning Parameters */}
-        <Stack gap="xs">
-          <Text size="sm" c="dimmed" fw={500}>
-            Intelligent Recommended Cleaning Parameters
-          </Text>
-          <Box
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '16px',
-              background: 'rgba(0,0,0,0.03)',
-              borderRadius: '12px',
-            }}
-          >
-            <Text size="sm">Reclean dirty rooms/zones (Optional)</Text>
-            <Switch />
-          </Box>
-        </Stack>
-
-        {/* Cleaning Mode */}
-        <Stack gap="xs">
-          <Text size="sm" c="dimmed" fw={500}>
-            Cleaning Mode
-          </Text>
-          <Grid gutter="sm">
-            <Grid.Col span={6}>
-              <Box
+              <div
+                key={mode.id}
                 style={{
-                  aspectRatio: 1,
-                  border: '2px solid #FFD700',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  background: 'white',
-                  boxShadow: '0 0 0 3px rgba(255, 215, 0, 0.2)',
-                }}
-              >
-                <Box
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '50%',
-                    background: '#34C759',
-                    marginBottom: '8px',
-                  }}
-                />
-                <Text size="sm" fw={500}>
-                  Vac & Mop
-                </Text>
-              </Box>
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <Box
-                style={{
-                  aspectRatio: 1,
+                  aspectRatio: '1',
                   border: '2px solid rgba(0,0,0,0.1)',
                   borderRadius: '12px',
                   display: 'flex',
@@ -186,38 +123,170 @@ export function CleaningModeModal({
                   background: 'white',
                 }}
               >
-                <Box
+                <div
                   style={{
                     width: '48px',
                     height: '48px',
                     borderRadius: '50%',
-                    background: '#007AFF',
+                    background: mode.color,
                     marginBottom: '8px',
                   }}
                 />
-                <Text size="sm" fw={500}>
-                  Mop after Vac
-                </Text>
-              </Box>
-            </Grid.Col>
-          </Grid>
-        </Stack>
+                <span style={{ fontSize: '13px', fontWeight: 500 }}>{mode.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Intelligent Recommended Cleaning Parameters */}
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '13px', color: '#666', fontWeight: 500, margin: '0 0 12px' }}>
+            Intelligent Recommended Cleaning Parameters
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px',
+              background: 'white',
+              borderRadius: '12px',
+            }}
+          >
+            <span style={{ fontSize: '14px' }}>Reclean dirty rooms/zones (Optional)</span>
+            <label style={{ position: 'relative', display: 'inline-block', width: '51px', height: '31px' }}>
+              <input type="checkbox" style={{ opacity: 0, width: 0, height: 0 }} />
+              <span
+                style={{
+                  position: 'absolute',
+                  cursor: 'pointer',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: '#ccc',
+                  transition: '0.4s',
+                  borderRadius: '31px',
+                }}
+              />
+            </label>
+          </div>
+        </div>
+
+        {/* Cleaning Mode */}
+        <div style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '13px', color: '#666', fontWeight: 500, margin: '0 0 12px' }}>
+            Cleaning Mode
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+            <div
+              style={{
+                aspectRatio: '1',
+                border: '2px solid #FFD700',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                background: 'white',
+                boxShadow: '0 0 0 3px rgba(255, 215, 0, 0.2)',
+              }}
+            >
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  background: '#34C759',
+                  marginBottom: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span style={{ fontSize: '24px' }}>💧</span>
+              </div>
+              <span style={{ fontSize: '13px', fontWeight: 500 }}>Vac & Mop</span>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '8px',
+                  right: '8px',
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  background: '#FFD700',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span style={{ fontSize: '12px' }}>✓</span>
+              </div>
+            </div>
+            <div
+              style={{
+                aspectRatio: '1',
+                border: '2px solid rgba(0,0,0,0.1)',
+                borderRadius: '12px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                background: 'white',
+              }}
+            >
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  background: '#5AC8FA',
+                  marginBottom: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span style={{ fontSize: '20px' }}>→</span>
+              </div>
+              <span style={{ fontSize: '13px', fontWeight: 500 }}>Mop after Vac</span>
+            </div>
+          </div>
+        </div>
 
         {/* Deep Cleaning */}
-        <Box
+        <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '16px',
-            background: 'rgba(0,0,0,0.03)',
+            background: 'white',
             borderRadius: '12px',
           }}
         >
-          <Text size="sm">Deep Cleaning</Text>
-          <Switch />
-        </Box>
-      </Stack>
-    </Drawer>
+          <span style={{ fontSize: '14px' }}>Deep Cleaning</span>
+          <label style={{ position: 'relative', display: 'inline-block', width: '51px', height: '31px' }}>
+            <input type="checkbox" style={{ opacity: 0, width: 0, height: 0 }} />
+            <span
+              style={{
+                position: 'absolute',
+                cursor: 'pointer',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: '#ccc',
+                transition: '0.4s',
+                borderRadius: '31px',
+              }}
+            />
+          </label>
+        </div>
+      </div>
+    </>
   );
 }

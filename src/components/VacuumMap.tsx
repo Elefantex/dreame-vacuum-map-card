@@ -1,4 +1,3 @@
-import { Box } from '@mantine/core';
 import type { Hass, RoomPosition, CleaningMode } from '../types/homeassistant';
 
 interface VacuumMapProps {
@@ -22,7 +21,7 @@ export function VacuumMap({
   const mapUrl = mapEntity?.attributes?.entity_picture;
 
   return (
-    <Box
+    <div
       style={{
         position: 'relative',
         margin: '0 20px',
@@ -56,7 +55,7 @@ export function VacuumMap({
 
       {/* Room Selection Overlay */}
       {selectedMode === 'room' && (
-        <Box
+        <div
           style={{
             position: 'absolute',
             top: 0,
@@ -74,14 +73,14 @@ export function VacuumMap({
           }}
         >
           Click on room numbers to select rooms for cleaning
-        </Box>
+        </div>
       )}
 
       {/* Room Numbers */}
       {selectedMode === 'room' && (
-        <Box style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
           {rooms.map((room) => (
-            <Box
+            <div
               key={room.id}
               onClick={() => onRoomToggle(room.id, room.name)}
               style={{
@@ -108,10 +107,10 @@ export function VacuumMap({
               title={room.name}
             >
               {room.id}
-            </Box>
+            </div>
           ))}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }

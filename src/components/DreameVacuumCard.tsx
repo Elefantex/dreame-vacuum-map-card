@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { MantineProvider, Stack, Box, Text, Notification, createTheme } from '@mantine/core';
 import { Header } from './Header';
 import { CleaningModeButton } from './CleaningModeButton';
 import { VacuumMap } from './VacuumMap';
@@ -7,16 +6,6 @@ import { ModeTabs } from './ModeTabs';
 import { ActionButtons } from './ActionButtons';
 import { CleaningModeModal } from './CleaningModeModal';
 import type { Hass, HassConfig, CleaningMode, CleaningStrategy, RoomPosition } from '../types/homeassistant';
-
-interface DreameVacuumCardProps {
-  hass: Hass;
-  config: HassConfig;
-  emotionRoot?: HTMLElement | ShadowRoot;
-}
-
-const theme = createTheme({
-  /** Your theme override here */
-});
 
 interface DreameVacuumCardProps {
   hass: Hass;
@@ -35,7 +24,7 @@ const ROOM_POSITIONS: Record<number, { x: number; y: number }> = {
   12: { x: 56.1, y: 53.7 },
 };
 
-export function DreameVacuumCard({ hass, config, emotionRoot }: DreameVacuumCardProps) {
+export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
   const [selectedMode, setSelectedMode] = useState<CleaningMode>('all');
   const [selectedRooms, setSelectedRooms] = useState<Map<number, string>>(new Map());
   const [cleaningMode, setCleaningMode] = useState<CleaningStrategy>('CleanGenius');
@@ -43,6 +32,9 @@ export function DreameVacuumCard({ hass, config, emotionRoot }: DreameVacuumCard
   const [toast, setToast] = useState<string | null>(null);
 
   const entity = hass.states[config.entity];
+
+  console.log('DreameVacuumCard render', { entity, config });
+
   const deviceName = entity?.attributes?.friendly_name || config.title || 'Dreame Vacuum';
   const mapEntityId = config.map_entity || `camera.${config.entity.split('.')[1]}_map`;
 
@@ -120,80 +112,94 @@ export function DreameVacuumCard({ hass, config, emotionRoot }: DreameVacuumCard
   }
 
   return (
-    <MantineProvider
-      theme={theme}
-      getRootElement={() => (emotionRoot as HTMLElement) || document.body}
-      cssVariablesSelector=":host"
+    <div
+      style={{
+        background: '#f5f5f7',
+        borderRadius: '20px',
+        overflow: 'hidden',
+        boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      }}
     >
-      <Box
-        style={{
-          background: '#f8f9fa',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          boxShadow: '0 2px 20px rgba(0,0,0,0.08)',
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        }}
-      >
-        <Stack gap="md">
-          <Header entity={entity} deviceName={deviceName} />
-          <CleaningModeButton cleaningMode={cleaningMode} onClick={() => setModalOpened(true)} />
-          <VacuumMap
-            hass={hass}
-            mapEntityId={mapEntityId}
-            selectedMode={selectedMode}
-            selectedRooms={selectedRooms}
-            rooms={rooms}
-            onRoomToggle={handleRoomToggle}
-          />
-
-          <Box style={{ padding: '0 20px 20px' }}>
-            {selectedRooms.size > 0 && (
-              <Text
-                size="sm"
-                c="blue"
-                style={{
-                  margin: '10px 0',
-                  padding: '8px 12px',
-                  background: 'rgba(0,122,255, 0.1)',
-                  borderRadius: '8px',
-                  textAlign: 'center',
-                }}
-              >
-                Selected rooms: {Array.from(selectedRooms.values()).join(', ')}
-              </Text>
-            )}
-            <ModeTabs selectedMode={selectedMode} onModeChange={handleModeChange} />
-            <ActionButtons
-              selectedMode={selectedMode}
-              selectedRoomsCount={selectedRooms.size}
-              onClean={handleClean}
-              onDock={handleDock}
-            />
-          </Box>
-        </Stack>
-
-        <CleaningModeModal
-          opened={modalOpened}
-          onClose={() => setModalOpened(false)}
-          cleaningMode={cleaningMode}
-          onModeChange={setCleaningMode}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <Header entity={entity} deviceName={deviceName} />
+        <VacuumMap
+          hass={hass}
+          mapEntityId={mapEntityId}
+          selectedMode={selectedMode}
+          selectedRooms={selectedRooms}
+          rooms={rooms}
+          onRoomToggle={handleRoomToggle}
         />
 
-        {toast && (
-          <Notification
-            title=""
-            onClose={() => setToast(null)}
+        <CleaningModeButton cleaningMode={cleaningMode} onClick={() => setModalOpened(true)} />
+
+        <div style={{ padding: '0 20px 20px' }}>
+          {selectedRooms.size > 0 && (
+            <div
+              style={{
+                margin: '10px 0',
+                padding: '8px 12px',
+                background: 'rgba(0,122,255, 0.1)',
+                borderRadius: '8px',
+                textAlign: 'center',
+                fontSize: '14px',
+                color: '#007aff',
+              }}
+            >
+              Selected rooms: {Array.from(selectedRooms.values()).join(', ')}
+            </div>
+          )}
+          <ModeTabs selectedMode={selectedMode} onModeChange={handleModeChange} />
+          <ActionButtons
+            selectedMode={selectedMode}
+            selectedRoomsCount={selectedRooms.size}
+            onClean={handleClean}
+            onDock={handleDock}
+          />
+        </div>
+      </div>
+
+      <CleaningModeModal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        cleaningMode={cleaningMode}
+        onModeChange={setCleaningMode}
+      />
+
+      {toast && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            zIndex: 1000,
+            background: 'white',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '12px',
+          }}
+        >
+          <span>{toast}</span>
+          <button
+            onClick={() => setToast(null)}
             style={{
-              position: 'fixed',
-              top: '20px',
-              right: '20px',
-              zIndex: 1000,
+              border: 'none',
+              background: 'transparent',
+              cursor: 'pointer',
+              fontSize: '18px',
+              padding: '0',
+              color: '#666',
             }}
           >
-            {toast}
-          </Notification>
-        )}
-      </Box>
-    </MantineProvider>
+            ×
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

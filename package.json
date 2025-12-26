@@ -11,10 +11,6 @@
     "deploy": "npm run build && sudo cp dist/dreame-vacuum-map-card.js /home/noam/.config/home-assistant/www/dreame-vacuum-map-card/"
   },
   "dependencies": {
-    "@emotion/cache": "^11.14.0",
-    "@emotion/react": "^11.14.0",
-    "@mantine/core": "^7.14.4",
-    "@mantine/hooks": "^7.14.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

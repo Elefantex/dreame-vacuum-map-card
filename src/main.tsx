@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
 import { DreameVacuumCard } from './components/DreameVacuumCard';
 import type { Hass, HassConfig } from './types/homeassistant';
 
@@ -9,7 +7,6 @@ class DreameVacuumMapCard extends HTMLElement {
   private _root: ReactDOM.Root | null = null;
   private _hass?: Hass;
   private _config?: HassConfig;
-  private _emotionCache: ReturnType<typeof createCache> | null = null;
 
   constructor() {
     super();
@@ -43,15 +40,6 @@ class DreameVacuumMapCard extends HTMLElement {
   private render() {
     if (!this._hass || !this._config || !this.shadowRoot) return;
 
-    // Create emotion cache for shadow DOM
-    if (!this._emotionCache) {
-      this._emotionCache = createCache({
-        key: 'mantine',
-        container: this.shadowRoot as any,
-        prepend: false,
-      });
-    }
-
     // Create container for React
     let container = this.shadowRoot.querySelector('#react-root') as HTMLElement;
     if (!container) {
@@ -65,12 +53,10 @@ class DreameVacuumMapCard extends HTMLElement {
       this._root = ReactDOM.createRoot(container);
     }
 
-    // Render React component with Emotion cache
+    // Render React component
     this._root.render(
       <React.StrictMode>
-        <CacheProvider value={this._emotionCache}>
-          <DreameVacuumCard hass={this._hass} config={this._config} emotionRoot={this.shadowRoot} />
-        </CacheProvider>
+        <DreameVacuumCard hass={this._hass} config={this._config} />
       </React.StrictMode>
     );
   }

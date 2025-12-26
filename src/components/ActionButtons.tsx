@@ -1,4 +1,3 @@
-import { Button, Group } from '@mantine/core';
 import type { CleaningMode } from '../types/homeassistant';
 
 interface ActionButtonsProps {
@@ -18,46 +17,62 @@ export function ActionButtons({
     switch (selectedMode) {
       case 'room':
         return selectedRoomsCount > 0
-          ? `🏠 Clean ${selectedRoomsCount} Room${selectedRoomsCount > 1 ? 's' : ''}`
-          : '🏠 Select Rooms';
+          ? `Clean ${selectedRoomsCount} Room${selectedRoomsCount > 1 ? 's' : ''}`
+          : 'Select Rooms';
       case 'all':
-        return '▶️ Clean All';
+        return 'Clean All';
       case 'zone':
-        return '📍 Zone Clean';
+        return 'Zone Clean';
       default:
-        return '▶️ Clean';
+        return 'Clean';
     }
   };
 
   return (
-    <Group gap="md" style={{ marginTop: '15px' }}>
-      <Button
-        fullWidth
-        size="lg"
+    <div style={{ display: 'flex', gap: '12px', marginTop: '15px' }}>
+      <button
         onClick={onClean}
         style={{
           flex: 1,
+          border: 'none',
           borderRadius: '15px',
-          background: '#007aff',
-          boxShadow: '0 4px 15px rgba(0,122,255,0.3)',
+          padding: '14px',
+          fontSize: '16px',
+          fontWeight: 500,
+          background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+          color: '#fff',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(255,165,0,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
         }}
       >
-        {getCleanButtonText()}
-      </Button>
-      <Button
-        fullWidth
-        size="lg"
-        variant="light"
+        <span>▶️</span>
+        <span>{getCleanButtonText()}</span>
+      </button>
+      <button
         onClick={onDock}
         style={{
           flex: 1,
+          border: 'none',
           borderRadius: '15px',
-          background: 'rgba(0,0,0,0.05)',
+          padding: '14px',
+          fontSize: '16px',
+          fontWeight: 500,
+          background: '#e8e8e8',
           color: '#1a1a1a',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
         }}
       >
-        🏠 Dock
-      </Button>
-    </Group>
+        <span>🏠</span>
+        <span>Dock</span>
+      </button>
+    </div>
   );
 }
