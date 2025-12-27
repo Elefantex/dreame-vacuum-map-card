@@ -68,7 +68,7 @@ theme: dark # Optional, 'light' (default) or 'dark'
 ## Development
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
 
 ### Setup
