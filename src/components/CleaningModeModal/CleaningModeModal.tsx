@@ -96,7 +96,7 @@ export function CleaningModeModal({
           />
         </div>
 
-        <div className="cleaning-mode-modal__content">
+        <div className="cleaning-mode-modal__content-wrapper">
           {isCleanGenius ? (
             <CleanGeniusMode
               cleangeniusMode={cleangeniusMode}
