@@ -107,3 +107,5 @@ The built file will be in `dist/dreame-vacuum-map-card.js`
 
 ## License
 
+MIT License - see [LICENSE](LICENSE) file for details
+
