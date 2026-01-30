@@ -4,7 +4,13 @@ A modern, beautiful Home Assistant Lovelace card for controlling Dreame robot va
 
 ## Features
 
-(Almost) complete feature pairity with the original Dreame application
+- (Almost) complete feature parity with the original Dreame application
+- Support for **Room**, **All**, and **Zone** cleaning modes
+- Interactive map with room and zone selection
+- CleanGenius and Custom cleaning mode configuration
+- Real-time vacuum status and battery level
+- Light and dark theme support
+- **Internationalization (i18n)**: English and German translations
 
 <div style="display: flex; gap: 10px;">
     <img src="screenshots/light-main.png" alt="Main Screen Light" style="width: 33%;">
@@ -54,6 +60,7 @@ entity: vacuum.dreame_vacuum_entity
 title: Dreame Vacuum
 map_entity: camera.dreame_vacuum_entity # Optional, defaults to camera.${ENTITY_NAME}_map
 theme: dark # Optional, 'light' (default) or 'dark'
+language: en # Optional, 'en' (default) or 'de'
 ```
 
 ## Configuration
@@ -64,6 +71,51 @@ theme: dark # Optional, 'light' (default) or 'dark'
 | `title` | string | Optional | Custom title for the card |
 | `map_entity` | string | Optional | Camera entity for the vacuum map (defaults to `camera.${ENTITY_NAME}_map`) |
 | `theme` | string | `light` | Theme mode: `light` or `dark` |
+| `language` | string | `en` | Language: `en` (English) or `de` (German) |
+
+## Internationalization (i18n)
+
+The card supports multiple languages. Currently available:
+
+- **English (en)** - Default
+- **German (de)** - Deutsch
+
+Set the language in your configuration:
+
+```yaml
+type: custom:dreame-vacuum-map-card
+entity: vacuum.dreame_vacuum_entity
+language: de
+```
+
+All user-facing text is translated, including:
+- Room selection and cleaning modes
+- Action buttons (Clean, Pause, Resume, Stop, Dock)
+- Toast notifications
+- Map overlays and instructions
+- Error messages
+
+### Adding New Languages
+
+To add support for additional languages:
+
+1. Create a new translation file in `src/i18n/locales/` (e.g., `fr.ts` for French)
+2. Import the `Translation` type and provide translations for all keys
+3. Add the new locale to `src/i18n/locales/index.ts`
+4. Update the `HassConfig` type in `src/types/homeassistant.ts`
+
+Example structure:
+```typescript
+import type { Translation } from './en';
+
+export const fr: Translation = {
+  room_selector: {
+    title: 'Sélectionner les pièces',
+    // ... more translations
+  },
+  // ... all other sections
+};
+```
 
 ## Development
 

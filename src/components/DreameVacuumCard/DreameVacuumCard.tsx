@@ -8,7 +8,7 @@ import { CleaningModeModal } from '../CleaningModeModal';
 import { ShortcutsModal } from '../ShortcutsModal';
 import { RoomSelectionDisplay } from '../RoomSelectionDisplay';
 import { Toast } from '../common';
-import { useVacuumCardState, useVacuumServices, useToast } from '../../hooks';
+import { useVacuumCardState, useVacuumServices, useToast, useTranslation } from '../../hooks';
 import { extractEntityData, getEffectiveCleaningMode } from '../../utils/entityHelpers';
 import type { Hass, HassConfig } from '../../types/homeassistant';
 import { useState } from 'react';
@@ -22,6 +22,8 @@ interface DreameVacuumCardProps {
 export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
   const entity = hass.states[config.entity];
   const theme = config.theme || 'light';
+  const language = config.language || 'en';
+  const { t } = useTranslation(language);
 
   // Track map image dimensions
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
@@ -54,13 +56,14 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
     entityId: config.entity,
     mapEntityId: config.map_entity || `camera.${config.entity.split('.')[1]}_map`,
     onSuccess: showToast,
+    language,
   });
 
   // Handle room toggle with toast
   const handleRoomToggleWithToast = (roomId: number, roomName: string) => {
     const wasSelected = selectedRooms.has(roomId);
     handleRoomToggle(roomId, roomName);
-    showToast(wasSelected ? `Deselected ${roomName}` : `Selected ${roomName}`);
+    showToast(wasSelected ? t('toast.deselected_room', { name: roomName }) : t('toast.selected_room', { name: roomName }));
   };
 
   // Handle clean action
@@ -77,18 +80,18 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
   // Handle resume (just calls start)
   const handleResume = () => {
     hass.callService('vacuum', 'start', { entity_id: config.entity });
-    showToast('Resuming cleaning');
+    showToast(t('toast.resuming'));
   };
 
   // Error handling
   if (!entity) {
-    return <div className="dreame-vacuum-card__error">Entity not found: {config.entity}</div>;
+    return <div className="dreame-vacuum-card__error">{t('errors.entity_not_found', { entity: config.entity })}</div>;
   }
 
   // Extract entity data
   const entityData = extractEntityData(entity, config);
   if (!entityData) {
-    return <div className="dreame-vacuum-card__error">Failed to load entity data</div>;
+    return <div className="dreame-vacuum-card__error">{t('errors.failed_to_load')}</div>;
   }
 
   const { deviceName, mapEntityId, rooms } = entityData;
@@ -104,6 +107,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
             rooms={rooms}
             selectedRooms={selectedRooms}
             onRoomToggle={handleRoomToggleWithToast}
+            language={language}
           />
         ) : (
           <VacuumMap
@@ -116,6 +120,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
             zone={selectedZone}
             onZoneChange={setSelectedZone}
             onImageDimensionsChange={(width, height) => setImageDimensions({ width, height })}
+            language={language}
           />
         )}
 
@@ -126,17 +131,19 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
           onClick={() => setModalOpened(true)} 
           onShortcutsClick={() => setShortcutsModalOpened(true)}
           disabled={entity.attributes.started || false}
+          language={language}
         />
 
         <div className="dreame-vacuum-card__controls">
           {selectedMode === 'room' && (
-            <RoomSelectionDisplay selectedRooms={selectedRooms} />
+            <RoomSelectionDisplay selectedRooms={selectedRooms} language={language} />
           )}
           
           <ModeTabs 
             selectedMode={effectiveMode} 
             onModeChange={handleModeChange} 
             disabled={entity.attributes.started || false}
+            language={language}
           />
           
           <ActionButtons
@@ -150,6 +157,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
             onResume={handleResume}
             onStop={handleStop}
             onDock={handleDock}
+            language={language}
           />
         </div>
       </div>
@@ -159,6 +167,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
         onClose={() => setModalOpened(false)}
         entity={entity}
         hass={hass}
+        language={language}
       />
 
       <ShortcutsModal
@@ -166,6 +175,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
         onClose={() => setShortcutsModalOpened(false)}
         entity={entity}
         hass={hass}
+        language={language}
       />
 
       {toast && <Toast message={toast} onClose={hideToast} />}

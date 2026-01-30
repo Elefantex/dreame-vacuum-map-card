@@ -1,4 +1,6 @@
 import type { CleaningMode } from '../../types/homeassistant';
+import type { SupportedLanguage } from '../../i18n/locales';
+import { useTranslation } from '../../hooks';
 import { CleanButton, PauseButton, ResumeButton, StopButton, DockButton } from './components';
 import './ActionButtons.scss';
 
@@ -13,21 +15,7 @@ interface ActionButtonsProps {
   onResume: () => void;
   onStop: () => void;
   onDock: () => void;
-}
-
-function getCleanButtonText(mode: CleaningMode, roomsCount: number): string {
-  switch (mode) {
-    case 'room':
-      return roomsCount > 0
-        ? `Clean ${roomsCount} Room${roomsCount > 1 ? 's' : ''}`
-        : 'Select Rooms';
-    case 'all':
-      return 'Clean All';
-    case 'zone':
-      return 'Zone Clean';
-    default:
-      return 'Clean';
-  }
+  language?: SupportedLanguage;
 }
 
 export function ActionButtons({
@@ -41,15 +29,31 @@ export function ActionButtons({
   onResume,
   onStop,
   onDock,
+  language = 'en',
 }: ActionButtonsProps) {
-  const cleanButtonText = getCleanButtonText(selectedMode, selectedRoomsCount);
+  const { t, getRoomCountTranslation } = useTranslation(language);
+
+  const getCleanButtonText = (): string => {
+    switch (selectedMode) {
+      case 'room':
+        return getRoomCountTranslation(selectedRoomsCount);
+      case 'all':
+        return t('actions.clean_all');
+      case 'zone':
+        return t('actions.zone_clean');
+      default:
+        return t('actions.clean');
+    }
+  };
+
+  const cleanButtonText = getCleanButtonText();
 
   // Running state - show pause and stop
   if (isRunning && !isPaused && !isDocked) {
     return (
       <div className="action-buttons">
-        <PauseButton onClick={onPause} />
-        <StopButton onClick={onStop} />
+        <PauseButton onClick={onPause} language={language} />
+        <StopButton onClick={onStop} language={language} />
       </div>
     );
   }
@@ -58,8 +62,8 @@ export function ActionButtons({
   if (isPaused) {
     return (
       <div className="action-buttons">
-        <ResumeButton onClick={onResume} />
-        <StopButton onClick={onStop} />
+        <ResumeButton onClick={onResume} language={language} />
+        <StopButton onClick={onStop} language={language} />
       </div>
     );
   }
@@ -68,7 +72,7 @@ export function ActionButtons({
   return (
     <div className="action-buttons">
       <CleanButton onClick={onClean} text={cleanButtonText} />
-      <DockButton onClick={onDock} />
+      <DockButton onClick={onDock} language={language} />
     </div>
   );
 }
