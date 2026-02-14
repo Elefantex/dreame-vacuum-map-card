@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SLIDER_CONFIG, MOP_PAD_HUMIDITY } from '../../../constants';
 
 interface WetnessSliderProps {
@@ -19,30 +20,49 @@ export function WetnessSlider({
   moistLabel,
   wetLabel,
 }: WetnessSliderProps) {
-  const wetnessPercent = ((wetnessLevel - SLIDER_CONFIG.WETNESS.MIN) / (SLIDER_CONFIG.WETNESS.MAX - SLIDER_CONFIG.WETNESS.MIN)) * 100;
+  const [localValue, setLocalValue] = useState(wetnessLevel);
+  const wetnessPercent = ((localValue - SLIDER_CONFIG.WETNESS.MIN) / (SLIDER_CONFIG.WETNESS.MAX - SLIDER_CONFIG.WETNESS.MIN)) * 100;
+  
+  // Calculate tooltip position accounting for thumb width (20px = 1.25rem)
+  const thumbWidth = 20; // in pixels
+  const tooltipLeft = `calc(${wetnessPercent}% + ${(thumbWidth / 2) - (wetnessPercent * thumbWidth / 100)}px)`;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalValue(parseInt(e.target.value));
+  };
+
+  const handleCommit = () => {
+    if (localValue !== wetnessLevel) {
+      onChangeWetness(entityId, localValue);
+    }
+  };
 
   return (
     <>
       {/* Slider */}
       <div className="cleaning-mode-modal__slider-container">
-        <input
-          type="range"
-          min={SLIDER_CONFIG.WETNESS.MIN}
-          max={SLIDER_CONFIG.WETNESS.MAX}
-          value={wetnessLevel}
-          onChange={(e) => onChangeWetness(entityId, parseInt(e.target.value))}
-          className="cleaning-mode-modal__slider"
-          style={{
-            background: `linear-gradient(to right, var(--accent-bg-secondary) 0%, var(--accent-bg-secondary) ${wetnessPercent}%, var(--accent-bg-secondary-hover) ${wetnessPercent}%, var(--accent-bg-secondary-hover) 100%)`
-          }}
-        />
-        <div 
-          className="cleaning-mode-modal__slider-value"
-          style={{
-            left: `calc(${wetnessPercent}% + ${8 - wetnessPercent * 0.16}px)`
-          }}
-        >
-          {wetnessLevel}
+        <div className="cleaning-mode-modal__slider-wrapper">
+          <input
+            type="range"
+            min={SLIDER_CONFIG.WETNESS.MIN}
+            max={SLIDER_CONFIG.WETNESS.MAX}
+            value={localValue}
+            onChange={handleChange}
+            onMouseUp={handleCommit}
+            onTouchEnd={handleCommit}
+            className="cleaning-mode-modal__slider"
+            style={{
+              background: `linear-gradient(to right, var(--accent-bg-secondary) 0%, var(--accent-bg-secondary) ${wetnessPercent}%, var(--accent-bg-secondary-hover) ${wetnessPercent}%, var(--accent-bg-secondary-hover) 100%)`
+            }}
+          />
+          <div 
+            className="cleaning-mode-modal__slider-tooltip"
+            style={{
+              left: tooltipLeft
+            }}
+          >
+            {localValue}
+          </div>
         </div>
       </div>
 
