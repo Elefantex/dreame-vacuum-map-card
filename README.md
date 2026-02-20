@@ -37,6 +37,11 @@ A modern, beautiful Home Assistant Lovelace card for controlling Dreame robot va
     <img src="screenshots/dark-zone-cleaning.png" alt="Zone Cleaning Dark" style="width: 33%;">
 </div>
 
+<div style="display: flex; gap: 10px;">
+    <img src="screenshots/light-settings.png" alt="Settings Light" style="width: 33%;">
+    <img src="screenshots/dark-settings.png" alt="Settings Dark" style="width: 33%;">
+</div>
+
 ## Installation
 
 ### 1. Download the card

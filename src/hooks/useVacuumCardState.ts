@@ -16,6 +16,7 @@ export function useVacuumCardState({ defaultMode = DEFAULTS.MODE }: UseVacuumCar
   const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
   const [modalOpened, setModalOpened] = useState(false);
   const [shortcutsModalOpened, setShortcutsModalOpened] = useState(false);
+  const [settingsPanelOpened, setSettingsPanelOpened] = useState(false);
 
   const handleModeChange = useCallback((mode: CleaningMode) => {
     setSelectedMode(mode);
@@ -45,11 +46,13 @@ export function useVacuumCardState({ defaultMode = DEFAULTS.MODE }: UseVacuumCar
     selectedZone,
     modalOpened,
     shortcutsModalOpened,
+    settingsPanelOpened,
     setSelectedMode,
     setSelectedRooms,
     setSelectedZone,
     setModalOpened,
     setShortcutsModalOpened,
+    setSettingsPanelOpened,
     handleModeChange,
     handleRoomToggle,
   };

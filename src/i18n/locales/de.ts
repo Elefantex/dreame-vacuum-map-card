@@ -122,4 +122,48 @@ export const de: Translation = {
     entity_not_found: 'Entität nicht gefunden: {{entity}}',
     failed_to_load: 'Entitätsdaten konnten nicht geladen werden',
   },
+
+  // Settings Panel
+  settings: {
+    title: 'Einstellungen',
+    consumables: {
+      title: 'Verbrauchsmaterialien',
+      main_brush: 'Hauptbürste',
+      side_brush: 'Seitenbürste',
+      filter: 'Filter',
+      sensor: 'Sensor',
+      remaining: 'verbleibend',
+      reset: 'Zurücksetzen',
+    },
+    device_info: {
+      title: 'Geräteinformationen',
+      firmware: 'Firmware',
+      total_area: 'Gesamtreinigungsfläche',
+      total_time: 'Gesamtreinigungszeit',
+      total_cleans: 'Gesamte Reinigungen',
+      wifi_ssid: 'WLAN-Netzwerk',
+      wifi_signal: 'Signalstärke',
+      ip_address: 'IP-Adresse',
+    },
+    map_management: {
+      title: 'Kartenverwaltung',
+      description: 'Wählen Sie die Karte für die Reinigung aus.',
+      no_maps: 'Keine Karten verfügbar',
+    },
+    quick_settings: {
+      title: 'Schnelleinstellungen',
+      child_lock: 'Kindersicherung',
+      child_lock_desc: 'Tasten am Gerät deaktivieren',
+      carpet_boost: 'Teppich-Boost',
+      carpet_boost_desc: 'Saugkraft auf Teppichen erhöhen',
+      obstacle_avoidance: 'Hindernisvermeidung',
+      obstacle_avoidance_desc: 'Hindernisse beim Reinigen umfahren',
+      auto_dust_collecting: 'Auto-Entleerung',
+      auto_dust_collecting_desc: 'Staubbehälter automatisch leeren',
+      auto_drying: 'Auto-Trocknung',
+      auto_drying_desc: 'Wischmopp nach Reinigung trocknen',
+      dnd: 'Nicht stören',
+      dnd_desc: 'Ruhezeiten mit reduzierter Aktivität',
+    },
+  },
 };

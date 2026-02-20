@@ -1,0 +1,49 @@
+import { Modal, Accordion } from '../common';
+import { useTranslation } from '../../hooks';
+import { ConsumablesSection } from './sections/ConsumablesSection';
+import { DeviceInfoSection } from './sections/DeviceInfoSection';
+import { MapManagementSection } from './sections/MapManagementSection';
+import { QuickSettingsSection } from './sections/QuickSettingsSection';
+import { Gauge, Info, Map, Settings2 } from 'lucide-react';
+import type { Hass, HassEntity, HassConfig } from '../../types/homeassistant';
+import './SettingsPanel.scss';
+
+interface SettingsPanelProps {
+  opened: boolean;
+  onClose: () => void;
+  hass: Hass;
+  entity: HassEntity;
+  config: HassConfig;
+}
+
+export function SettingsPanel({ opened, onClose, hass, entity, config }: SettingsPanelProps) {
+  const { t } = useTranslation();
+
+  return (
+    <Modal opened={opened} onClose={onClose}>
+      <div className="settings-panel">
+        <h2 className="settings-panel__title">{t('settings.title')}</h2>
+
+        <div className="settings-panel__scroll-wrapper">
+          <div className="settings-panel__sections">
+            <Accordion title={t('settings.consumables.title')} icon={<Gauge />} defaultOpen>
+              <ConsumablesSection hass={hass} entity={entity} />
+            </Accordion>
+
+            <Accordion title={t('settings.device_info.title')} icon={<Info />}>
+              <DeviceInfoSection entity={entity} />
+            </Accordion>
+
+            <Accordion title={t('settings.map_management.title')} icon={<Map />}>
+              <MapManagementSection hass={hass} entity={entity} config={config} />
+            </Accordion>
+
+            <Accordion title={t('settings.quick_settings.title')} icon={<Settings2 />}>
+              <QuickSettingsSection hass={hass} entity={entity} />
+            </Accordion>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+}

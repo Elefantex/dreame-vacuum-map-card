@@ -118,6 +118,50 @@ export const en = {
     entity_not_found: 'Entity not found: {{entity}}',
     failed_to_load: 'Failed to load entity data',
   },
+
+  // Settings Panel
+  settings: {
+    title: 'Settings',
+    consumables: {
+      title: 'Consumables',
+      main_brush: 'Main Brush',
+      side_brush: 'Side Brush',
+      filter: 'Filter',
+      sensor: 'Sensor',
+      remaining: 'remaining',
+      reset: 'Reset',
+    },
+    device_info: {
+      title: 'Device Info',
+      firmware: 'Firmware',
+      total_area: 'Total Cleaned Area',
+      total_time: 'Total Cleaning Time',
+      total_cleans: 'Total Cleanings',
+      wifi_ssid: 'Wi-Fi Network',
+      wifi_signal: 'Signal Strength',
+      ip_address: 'IP Address',
+    },
+    map_management: {
+      title: 'Map Management',
+      description: 'Select which map to use for cleaning.',
+      no_maps: 'No maps available',
+    },
+    quick_settings: {
+      title: 'Quick Settings',
+      child_lock: 'Child Lock',
+      child_lock_desc: 'Disable physical buttons on device',
+      carpet_boost: 'Carpet Boost',
+      carpet_boost_desc: 'Increase suction on carpets',
+      obstacle_avoidance: 'Obstacle Avoidance',
+      obstacle_avoidance_desc: 'Avoid obstacles during cleaning',
+      auto_dust_collecting: 'Auto Empty',
+      auto_dust_collecting_desc: 'Automatically empty dustbin',
+      auto_drying: 'Auto Drying',
+      auto_drying_desc: 'Dry mop pad after cleaning',
+      dnd: 'Do Not Disturb',
+      dnd_desc: 'Quiet hours with reduced activity',
+    },
+  },
 };
 
 export type Translation = typeof en;

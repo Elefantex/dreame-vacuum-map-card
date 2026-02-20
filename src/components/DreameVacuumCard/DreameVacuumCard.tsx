@@ -5,6 +5,7 @@ import { ModeTabs } from '../ModeTabs';
 import { ActionButtons } from '../ActionButtons';
 import { CleaningModeModal } from '../CleaningModeModal';
 import { ShortcutsModal } from '../ShortcutsModal';
+import { SettingsPanel } from '../SettingsPanel';
 import { RoomSelectionDisplay } from '../RoomSelectionDisplay';
 import { Toast } from '../common';
 import { useVacuumCardState, useVacuumServices, useToast, useTranslation, useTheme } from '../../hooks';
@@ -44,9 +45,11 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
     selectedZone,
     modalOpened,
     shortcutsModalOpened,
+    settingsPanelOpened,
     setSelectedZone,
     setModalOpened,
     setShortcutsModalOpened,
+    setSettingsPanelOpened,
     handleModeChange,
     handleRoomToggle,
   } = useVacuumCardState({ defaultMode: config.default_mode });
@@ -100,7 +103,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
   return (
     <div ref={containerRef} className={`dreame-vacuum-card dreame-vacuum-card--${theme.name}`}>
       <div className="dreame-vacuum-card__container">
-        <Header entity={entity} deviceName={deviceName} />
+        <Header entity={entity} deviceName={deviceName} onSettingsClick={() => setSettingsPanelOpened(true)} />
 
         <VacuumMap
           hass={hass}
@@ -176,6 +179,14 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
         entity={entity}
         hass={hass}
         language={language}
+      />
+
+      <SettingsPanel
+        opened={settingsPanelOpened}
+        onClose={() => setSettingsPanelOpened(false)}
+        hass={hass}
+        entity={entity}
+        config={config}
       />
 
       {toast && <Toast message={toast} onClose={hideToast} />}

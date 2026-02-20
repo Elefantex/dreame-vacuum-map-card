@@ -1,3 +1,4 @@
+export { Accordion } from './Accordion';
 export { Toggle } from './Toggle';
 export { CircularButton } from './CircularButton';
 export { Modal } from './Modal';

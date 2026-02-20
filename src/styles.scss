@@ -1,3 +1,4 @@
+@use './components/common/Accordion/Accordion.scss';
 @use './components/common/Toggle/Toggle.scss';
 @use './components/common/CircularButton/CircularButton.scss';
 @use './components/common/Modal/Modal.scss';
@@ -11,4 +12,9 @@
 @use './components/CleaningModeModal/CleaningModeModal.scss';
 @use './components/RoomSelectionDisplay/RoomSelectionDisplay.scss';
 @use './components/ShortcutsModal/ShortcutsModal.scss';
+@use './components/SettingsPanel/sections/ConsumablesSection.scss';
+@use './components/SettingsPanel/sections/DeviceInfoSection.scss';
+@use './components/SettingsPanel/sections/MapManagementSection.scss';
+@use './components/SettingsPanel/sections/QuickSettingsSection.scss';
+@use './components/SettingsPanel/SettingsPanel.scss';
 @use './components/DreameVacuumCard/DreameVacuumCard.scss';

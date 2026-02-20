@@ -1,3 +1,4 @@
+import { Settings } from 'lucide-react';
 import type { HassEntity } from '../../types/homeassistant';
 import './Header.scss';
 import {
@@ -12,9 +13,10 @@ import {
 interface HeaderProps {
   entity: HassEntity;
   deviceName: string;
+  onSettingsClick?: () => void;
 }
 
-export function Header({ entity, deviceName }: HeaderProps) {
+export function Header({ entity, deviceName, onSettingsClick }: HeaderProps) {
   const getStatusText = () => {
     const status = entity.attributes.status;
     return typeof status === 'string' ? status : entity.state;
@@ -57,8 +59,17 @@ export function Header({ entity, deviceName }: HeaderProps) {
 
   return (
     <div className="header">
-      <h2 className="header__title">{deviceName}</h2>
-      <p className="header__status">{getStatusText()}</p>
+      <div className="header__top">
+        <div className="header__title-wrapper">
+          <h2 className="header__title">{deviceName}</h2>
+          <p className="header__status">{getStatusText()}</p>
+        </div>
+        {onSettingsClick && (
+          <button className="header__settings-btn" onClick={onSettingsClick} type="button" aria-label="Settings">
+            <Settings />
+          </button>
+        )}
+      </div>
 
       {status !== 'Sleeping' && progress > 0 && (
         <div className="header__progress">
