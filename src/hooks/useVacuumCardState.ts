@@ -1,11 +1,17 @@
 import { useState, useCallback } from 'react';
 import type { CleaningMode, Zone } from '../types/homeassistant';
+import { DEFAULTS } from '../constants';
+
+interface UseVacuumCardStateOptions {
+  defaultMode?: CleaningMode;
+}
 
 /**
  * Hook to manage vacuum card UI state
+ * @param options.defaultMode - Initial tab to display (defaults to 'all')
  */
-export function useVacuumCardState() {
-  const [selectedMode, setSelectedMode] = useState<CleaningMode>('all');
+export function useVacuumCardState({ defaultMode = DEFAULTS.MODE }: UseVacuumCardStateOptions = {}) {
+  const [selectedMode, setSelectedMode] = useState<CleaningMode>(defaultMode);
   const [selectedRooms, setSelectedRooms] = useState<Map<number, string>>(new Map());
   const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
   const [modalOpened, setModalOpened] = useState(false);

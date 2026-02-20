@@ -49,7 +49,7 @@ export function DreameVacuumCard({ hass, config }: DreameVacuumCardProps) {
     setShortcutsModalOpened,
     handleModeChange,
     handleRoomToggle,
-  } = useVacuumCardState();
+  } = useVacuumCardState({ defaultMode: config.default_mode });
 
   // Toast notifications
   const { toast, showToast, hideToast } = useToast();
