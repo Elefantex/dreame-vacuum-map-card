@@ -2,7 +2,6 @@ import type { CleaningMode } from '../../types/homeassistant';
 import type { SupportedLanguage } from '../../i18n/locales';
 import { useTranslation } from '../../hooks';
 import './ModeTabs.scss';
-import { FlaskConical } from 'lucide-react';
 import type { ReactElement } from 'react';
 
 interface ModeTabsProps {
@@ -18,7 +17,7 @@ export function ModeTabs({ selectedMode, onModeChange, disabled = false, languag
   const modes: { value: CleaningMode; label: string; icon?: ReactElement }[] = [
     { value: 'room', label: t('modes.room') },
     { value: 'all', label: t('modes.all') },
-    { value: 'zone', label: t('modes.zone'), icon: <FlaskConical /> },
+    { value: 'zone', label: t('modes.zone') },
   ];
 
   return (
