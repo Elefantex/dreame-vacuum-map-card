@@ -1,4 +1,6 @@
-export const nl = {
+import type { Translation } from './en';
+
+export const nl: Translation = {
   // Kamer Kiezer
   room_selector: {
     title: 'Kamers Selecteren',
@@ -13,6 +15,10 @@ export const nl = {
     zone_overlay_create: 'Klik op de kaart om een schoonmaakzone te plaatsen',
     zone_overlay_resize: 'Sleep de hoeken om aan te passen, klik elders om te verplaatsen',
     clear_zone: 'Zone wissen',
+    switch_to_list: 'Naar lijstweergave',
+    switch_to_map: 'Naar kaartweergave',
+    room_list_overlay: 'Tik op kamers om te selecteren voor reiniging',
+    no_rooms: 'Geen kamers beschikbaar',
   },
 
   // Modus Tabbladen
@@ -111,6 +117,32 @@ export const nl = {
   header: {
     battery: 'Batterij',
     status: 'Status',
+    area: 'Oppervlak',
+    time: 'Tijd',
+  },
+
+  // Units
+  units: {
+    square_meters: 'm²',
+    minutes: 'min',
+    minutes_short: 'm',
+    percent: '%',
+    decibels: 'dBm',
+  },
+
+  // Suction Levels (friendly names)
+  suction_levels: {
+    quiet: 'Stil',
+    standard: 'Standaard',
+    strong: 'Turbo',
+    turbo: 'Max',
+  },
+
+  // Mop Washing Frequency
+  mop_washing_frequency: {
+    by_room: 'Per kamer',
+    by_area: 'Per oppervlak',
+    by_time: 'Per tijd',
   },
 
   // Fouten
@@ -186,8 +218,8 @@ export const nl = {
       obstacle_avoidance_desc: 'Sensoren gebruiken om obstakels te vermijden',
       ai_obstacle_detection: 'AI-obstakeldetectie',
       ai_obstacle_detection_desc: 'AI gebruiken om obstakels te herkennen en vermijden',
-      ai_obstacle_image_upload: 'Obstakelfoto\'s uploaden',
-      ai_obstacle_image_upload_desc: 'Foto\'s van obstakels uploaden voor analyse',
+      ai_obstacle_image_upload: "Obstakelfoto's uploaden",
+      ai_obstacle_image_upload_desc: "Foto's van obstakels uploaden voor analyse",
       ai_pet_detection: 'Huisdierdetectie',
       ai_pet_detection_desc: 'Huisdieren detecteren en vermijden',
       ai_human_detection: 'Personendetectie',
@@ -205,5 +237,3 @@ export const nl = {
     },
   },
 };
-
-export type Translation = typeof nl;
