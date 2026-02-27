@@ -86,6 +86,7 @@ export function VacuumMap({
       y2: Math.min(100, centerY + size / 2),
     };
 
+    console.debug('[Map] Zone created at click:', { clickX: x, clickY: y, xPercent, yPercent, newZone });
     onZoneChange(newZone);
   };
 
