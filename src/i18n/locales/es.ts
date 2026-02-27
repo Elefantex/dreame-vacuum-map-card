@@ -1,4 +1,6 @@
-export const es = {
+import type { Translation } from './en';
+
+export const es: Translation = {
   // Room Selector
   room_selector: {
     title: 'Seleccionar Habitaciones',
@@ -13,6 +15,10 @@ export const es = {
     zone_overlay_create: 'Haga clic en el mapa para colocar una zona de limpieza',
     zone_overlay_resize: 'Arrastre las esquinas para cambiar el tamaño, haga clic en otro lugar para reposicionar',
     clear_zone: 'Borrar zona',
+    switch_to_list: 'Cambiar a vista de lista',
+    switch_to_map: 'Cambiar a vista de mapa',
+    room_list_overlay: 'Toque las habitaciones para seleccionarlas para la limpieza',
+    no_rooms: 'No hay habitaciones disponibles',
   },
 
   // Mode Tabs
@@ -85,7 +91,8 @@ export const es = {
   shortcuts: {
     title: 'Accesos directos',
     no_shortcuts: 'No hay accesos directos disponibles',
-    create_hint: 'Cree accesos directos en la aplicación Dreame para iniciar rápidamente sus rutinas de limpieza favoritas',
+    create_hint:
+      'Cree accesos directos en la aplicación Dreame para iniciar rápidamente sus rutinas de limpieza favoritas',
   },
 
   // Custom Mode
@@ -111,6 +118,32 @@ export const es = {
   header: {
     battery: 'Batería',
     status: 'Estado',
+    area: 'Área',
+    time: 'Tiempo',
+  },
+
+  // Units
+  units: {
+    square_meters: 'm²',
+    minutes: 'min',
+    minutes_short: 'm',
+    percent: '%',
+    decibels: 'dBm',
+  },
+
+  // Suction Levels (friendly names)
+  suction_levels: {
+    quiet: 'Silencioso',
+    standard: 'Estándar',
+    strong: 'Turbo',
+    turbo: 'Máximo',
+  },
+
+  // Mop Washing Frequency
+  mop_washing_frequency: {
+    by_room: 'Por habitación',
+    by_area: 'Por área',
+    by_time: 'Por tiempo',
   },
 
   // Errors
@@ -205,5 +238,3 @@ export const es = {
     },
   },
 };
-
-export type Translation = typeof es;
